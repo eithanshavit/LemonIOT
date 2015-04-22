@@ -20,6 +20,7 @@
     "edison-io": "^0.8.7",
     "galileo-io": "^0.8.7",
     "johnny-five": "^0.8.58",
+    "nconf": "^0.7.1",
     "parse": "^1.4.2"
   }
 }
