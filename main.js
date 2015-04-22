@@ -41,10 +41,8 @@ function registerDevice() {
 
 function configureLed(rate) {
   if(board) {
-    board.on("ready", function() {
-      var led = new five.Led(3);
-      led.blink(result.rate);
-    });
+    var led = new five.Led(3);
+    led.blink(rate);
   }
 }
 
@@ -64,14 +62,14 @@ function fetchRate() {
     success: function(results) {
       var result = results[0];
       if(!result) {
-        console.error("Could not find rate for ", hostname);
+        console.error("Could not find rate for", hostname);
         return;
       }
       var newRate = result.get('rate');
       setRate(newRate);
     },
     error: function(error) {
-      console.log("Error: " + error.code + " " + error.message);
+      console.log("Error:", error.code, error.message);
     }
   });
 }
