@@ -14,8 +14,30 @@ if(nconf.get('ENV') !== "dev") {
 }
 
 var BlinkRate = Parse.Object.extend("BlinkRate");
-var query = new Parse.Query(BlinkRate);
-query.equalTo("hostname", hostname);
+
+function registerDevice() {
+  var query = new Parse.Query(BlinkRate);
+  query.equalTo("hostname", hostname);
+  query.find().then(function(blinkRates) {
+    if(blinkRates.length === 0) {
+      var blinkRate = new BlinkRate();
+      blinkRate.set("hostname", hostname);
+      blinkRate.set("rate", 42);
+      return blinkRate.save(null);
+    } else if(blinkRates.length === 1) {
+      return null;
+    } else { 
+      console.error("Found multiple rates for", hostname);
+      return null;
+    }
+  }).then(function(blinkRate) {
+    if(blinkRate) {
+      console.log("Successfully registered", hostname);
+    }
+  }, function(error) {
+    console.error("Failed to register", hostname, error.message);
+  });
+}
 
 function configureLed(rate) {
   if(board) {
@@ -36,6 +58,8 @@ function setRate(newRate) {
 }
 
 function fetchRate() {
+  var query = new Parse.Query(BlinkRate);
+  query.equalTo("hostname", hostname);
   query.find({
     success: function(results) {
       var result = results[0];
@@ -52,4 +76,9 @@ function fetchRate() {
   });
 }
 
-setInterval(fetchRate, 1000);
+function main() {
+  registerDevice();
+  setInterval(fetchRate, 1000);
+}
+
+main();
