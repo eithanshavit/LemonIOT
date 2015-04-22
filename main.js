@@ -11,6 +11,7 @@ if(nconf.get('ENV') !== "dev") {
   var Edison = require("edison-io");
   var five = require("johnny-five");
   var board = new five.Board({ io: new Edison() });
+  var led = new five.Led(3);
 }
 
 var BlinkRate = Parse.Object.extend("BlinkRate");
@@ -26,7 +27,7 @@ function registerDevice() {
       return blinkRate.save(null);
     } else if(blinkRates.length === 1) {
       return null;
-    } else { 
+    } else {
       console.error("Found multiple rates for", hostname);
       return null;
     }
@@ -41,7 +42,6 @@ function registerDevice() {
 
 function configureLed(rate) {
   if(board) {
-    var led = new five.Led(3);
     led.blink(rate);
   }
 }
