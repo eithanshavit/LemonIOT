@@ -1,0 +1,25 @@
+{
+  "name": "LemonIOT",
+  "version": "0.0.1",
+  "description": "Playing with Intel Edison",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eithanshavit/LemonIOT.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eithanshavit/LemonIOT/issues"
+  },
+  "homepage": "https://github.com/eithanshavit/LemonIOT",
+  "dependencies": {
+    "edison-io": "^0.8.7",
+    "galileo-io": "^0.8.7",
+    "johnny-five": "^0.8.58",
+    "parse": "^1.4.2"
+  }
+}
